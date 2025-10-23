@@ -1,0 +1,45 @@
+.featuredMovie {
+    display: flex;
+    max-width: 1087px;
+    justify-self: center;
+}
+
+.featuredMovieDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.featuredMovieImgContainer img {
+    width: 200px;
+}
+
+.moviesToWatch {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.genreContainer ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.moviesContainer {
+    display: flex;
+    justify-content: center;
+    max-width: 1087px;
+    flex-wrap: wrap;
+}
+
+.movieContainer {
+    width: 250px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.movieContainer img {
+    width: 250px;
+}
