@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script type="module" src="src/main.js" defer></script>
-    <link rel="stylesheet" href="css/base.css">
+    <title>Movie Site</title>
+    <!-- <link rel="stylesheet" href="css/base.css"> -->
     <link rel="stylesheet" href="css/home.css">
+    <script type="module" src="src/main.js"></script>
 </head>
 <body>
     <header class="header">
@@ -14,7 +14,9 @@
         <a class="logo" href="index.html">Film Finder</a>
         <nav class="nav_buttons" id="navButtons">
             <button>Newsletter</button>
-            <button>Favorites</button>
+            <a href="favorites.html">
+                <button>Favorites</button>
+            </a>
             <button class="search">Search</button>
         </nav>
     </header>
@@ -23,19 +25,19 @@
 
         <section class="moviesToWatch">
             <h3>Movies to Watch</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia
-               nec quam id consectetur. Quisque convallis dictum elit, quis placerat dui.
+            <p class="trendingMoviesDesc">Check out some of the most popular movies trending this week! Browse through 
+               the list below to discover exciting titles across various genres—from action-
+               packed adventures to thrilling mysteries. Find your next favorite movie!
             </p>
+            <h4>Genres</h4>
             <div class="genreContainer">
-                <ul class="genreList">
-                    <li>Action</li>
-                    <li>Comedy</li>
-                    <li>Drama</li>
-                    <li>Fantasy</li>
-                </ul>
+                <ul class="genreList"></ul>
             </div>
             <div class="moviesContainer"></div>
         </section>
+        <button id="clearStorage">
+            Clear Favorites (Testing)
+        </button>
     </main>
     <footer class="footer">
         <a class="logo" href="index.html">Film Finder</a>
