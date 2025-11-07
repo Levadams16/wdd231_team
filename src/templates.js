@@ -1,4 +1,4 @@
-import { mapGenreIdsToNames } from "./utility";
+import { mapGenreIdsToNames } from "./utility.js";
 
 export function movieCardTemplate(info, genreMap, baseImgURL) {
     const genres = mapGenreIdsToNames(info, genreMap);

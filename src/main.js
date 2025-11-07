@@ -103,49 +103,54 @@ async function init() {
     const genreMap = await getGenres();
     setFeaturedMovie();
     setTrendingMovies(genreMap);
+    attachWatchlistListeners();
 }
 
 init();
 
 // start of local storage and button logic
 
-const watchlistButtons = document.querySelectorAll('.watchlistButton');
+// const watchlistButtons = document.querySelectorAll('.watchlistButton');
 
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-watchlistButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    let movieContainer = button.closest('.movieContainer');
-    let movieTitle, movieImg;
+function attachWatchlistListeners() {
+  const watchlistButtons = document.querySelectorAll('.watchlistButton');
 
-    if (movieContainer) {
-      movieTitle = movieContainer.querySelector('h4').textContent;
-      movieImg = movieContainer.querySelector('img').src;
-    } else {
-      const featuredMovie = button.closest('.featuredMovie');
-      if (featuredMovie) {
-        movieTitle = featuredMovie.querySelector('h2').textContent;
-        movieImg = featuredMovie.querySelector('img').src;
-      }
-    }
+  watchlistButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      let movieContainer = button.closest('.movieContainer');
+      let movieTitle, movieImg;
 
-    if (movieTitle && movieImg) {
-      const movie = { title: movieTitle, img: movieImg };
-
-      const alreadyAdded = favorites.some(fav => fav.title === movie.title);
-
-      if (!alreadyAdded) {
-        favorites.push(movie);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        alert(`${movie.title} added to favorites!`);
-        button.textContent = "Added ✓";
-        button.disabled = true;
+      if (movieContainer) {
+        movieTitle = movieContainer.querySelector('h4').textContent;
+        movieImg = movieContainer.querySelector('img').src;
       } else {
-        alert(`${movie.title} is already in your favorites.`);
+        const featuredMovie = button.closest('.featuredMovie');
+        if (featuredMovie) {
+          movieTitle = featuredMovie.querySelector('h2').textContent;
+          movieImg = featuredMovie.querySelector('img').src;
+        }
       }
-    }
+
+      if (movieTitle && movieImg) {
+        const movie = { title: movieTitle, img: movieImg };
+        const alreadyAdded = favorites.some(fav => fav.title === movie.title);
+
+        if (!alreadyAdded) {
+          favorites.push(movie);
+          localStorage.setItem('favorites', JSON.stringify(favorites));
+          alert(`${movie.title} added to favorites!`);
+          button.textContent = "Added ✓";
+          button.disabled = true;
+        } else {
+          alert(`${movie.title} is already in your favorites.`);
+        }
+      }
+    });
   });
-});
+}
+
 
 // Clear Storage Button
 const clearStorageButton = document.getElementById('clearStorage');
