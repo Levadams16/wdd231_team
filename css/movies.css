@@ -1,0 +1,33 @@
+.featuredMovie {
+    border: 2px solid gray;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.ratingButton, .watchlistButton {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: black;
+    color: white;
+    transition: background-color 0.3s, padding 0.3s;
+}
+
+.ratingButton:hover, .watchlistButton:hover {
+    background-color: rgb(64, 64, 64);
+    padding: 7px 12px;
+}
+
+.movieContainer {
+    margin: 10px;
+    border-radius: 10px;
+    transition: padding 0.3s;
+}
+
+.movieContainer:hover {
+    padding: 20px;
+}
+
+.moviesContainer {
+    max-width: 1200px;
+}

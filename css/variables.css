@@ -27,11 +27,15 @@ main {
     align-items: center;
 }
 
-.genreContainer ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
+#genreDropdown {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
+
+/* #genreDropdown option {
+    background-color: gray;
+} */
 
 .moviesContainer {
     display: flex;

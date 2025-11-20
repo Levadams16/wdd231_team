@@ -3,6 +3,7 @@ import { mapGenreIdsToNames } from "./utility.js";
 
 const baseURL = "https://api.themoviedb.org/3/";
 const apiKey = import.meta.env.VITE_API_KEY;
+console.log("API KEY LOADED:", apiKey);
 
 const baseImgURL = "https://image.tmdb.org/t/p/w500";
 
@@ -47,7 +48,6 @@ async function setTrendingMovies(genreMap) {
     const trendingMovies = allTrendingMovies.slice(0, 8);
 
     const genres = await getTrendingMovieGenres(trendingMovies, genreMap);
-    setTrendingMovieGenres(genres);
 
     const moviesContainer = document.querySelector(".moviesContainer");
     // using the trendingMovies array, convert each object into html strings with the movieCardTemplate function  
@@ -93,24 +93,17 @@ async function getTrendingMovieGenres(trendingMovies, genreMap) {
     return Array.from(trendingMovieGenres);
 }
 
-function setTrendingMovieGenres(genres) {
-    const genreListContainer = document.querySelector(".genreList");
-    const html = genres.map(featuredGenreTemplate).join("");
-    genreListContainer.insertAdjacentHTML("afterbegin", html);
+function setGenreDropdown(genreMap) {
+  const dropdown = document.getElementById("genreDropdown");
+  Object.entries(genreMap).forEach(([id, name]) => {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = name;
+    dropdown.appendChild(option);
+  })
 }
-
-async function init() {
-    const genreMap = await getGenres();
-    setFeaturedMovie();
-    setTrendingMovies(genreMap);
-    attachWatchlistListeners();
-}
-
-init();
 
 // start of local storage and button logic
-
-// const watchlistButtons = document.querySelectorAll('.watchlistButton');
 
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
@@ -121,6 +114,7 @@ function attachWatchlistListeners() {
     button.addEventListener('click', () => {
       let movieContainer = button.closest('.movieContainer');
       let movieTitle, movieImg;
+      console.log("Button clicked:", button);
 
       if (movieContainer) {
         movieTitle = movieContainer.querySelector('h4').textContent;
@@ -141,7 +135,7 @@ function attachWatchlistListeners() {
           favorites.push(movie);
           localStorage.setItem('favorites', JSON.stringify(favorites));
           alert(`${movie.title} added to favorites!`);
-          button.textContent = "Added ✓";
+          button.textContent = "Added to Watchlist";
           button.disabled = true;
         } else {
           alert(`${movie.title} is already in your favorites.`);
@@ -171,3 +165,13 @@ if (clearStorageButton) {
     }
   });
 }
+
+async function init() {
+    const genreMap = await getGenres();
+    setGenreDropdown(genreMap);
+    await setFeaturedMovie();
+    await setTrendingMovies(genreMap);
+    attachWatchlistListeners();
+}
+
+init();

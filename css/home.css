@@ -3,12 +3,14 @@
 @import "global.css";
 @import "header.css";
 @import "variables.css";
+@import "movies.css";
 
 #clearStorage {
     background-color: #ff4444;
     color: white; 
     padding: 10px; 
     margin: 10px;
+    border-radius: 5px;
 }
 
 .trendingMoviesDesc {
