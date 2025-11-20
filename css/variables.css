@@ -46,6 +46,11 @@ main {
     padding: 10px;
 }
 
+.movieLink {
+    text-decoration: none;
+    color: black;
+}
+
 .movieContainer img {
     width: 250px;
 }
