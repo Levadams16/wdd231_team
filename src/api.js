@@ -15,3 +15,14 @@ export async function getJson(endpoint) {
 
     return await response.json();
 }
+
+export async function getGenres() {
+    const data = await getJson("genre/movie/list");
+    // returns { genres: [{id: 28, name: Action}, ...]}
+    const genreMap = {};
+    data.genres.forEach(genre => {
+        genreMap[genre.id] = genre.name;
+    });
+
+    return genreMap;
+}

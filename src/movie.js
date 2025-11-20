@@ -10,10 +10,8 @@ async function loadMovieDetails() {
     const movieInfo = await getJson(`movie/${movieId}`);
     const detailsContainer = document.getElementById("movieDetails");
 
-    console.log(movieInfo);
-
     // insert movie template into main container
     detailsContainer.insertAdjacentHTML("afterbegin", movieDetailsTemplate(movieInfo, baseImgURL));
 }
 
-await loadMovieDetails();
+loadMovieDetails();

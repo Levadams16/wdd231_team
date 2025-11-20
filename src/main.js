@@ -1,4 +1,4 @@
-import { baseImgURL, getJson } from "./api.js";
+import { baseImgURL, getJson, getGenres } from "./api.js";
 import { movieCardTemplate, featuredMovieTemplate, featuredGenreTemplate } from "./templates.js"
 import { mapGenreIdsToNames } from "./utility.js";
 
@@ -47,17 +47,6 @@ async function setFeaturedMovie() {
     const featuredContainer = document.querySelector(".featuredMovie");
     let html = featuredMovieTemplate(movie, baseImgURL);
     featuredContainer.insertAdjacentHTML("afterbegin", html);
-}
-
-async function getGenres() {
-    const data = await getJson("genre/movie/list");
-    // returns { genres: [{id: 28, name: Action}, ...]}
-    const genreMap = {};
-    data.genres.forEach(genre => {
-        genreMap[genre.id] = genre.name;
-    });
-
-    return genreMap;
 }
 
 async function getTrendingMovieGenres(trendingMovies, genreMap) {

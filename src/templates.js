@@ -1,4 +1,4 @@
-import { mapGenreIdsToNames } from "./utility.js";
+import { getMovieGenres, mapGenreIdsToNames } from "./utility.js";
 
 export function movieCardTemplate(info, genreMap, baseImgURL) {
     const genres = mapGenreIdsToNames(info, genreMap);
@@ -20,21 +20,31 @@ export function movieCardTemplate(info, genreMap, baseImgURL) {
 }
 
 export function movieDetailsTemplate(movie, baseImgURL) {
-  return `
-    <div class="movieDetailsCard">
-      <img src="${baseImgURL}${movie.poster_path}" alt="${movie.title}">
-      
-      <div class="movieDetailsInfo">
-        <h1>${movie.title}</h1>
-        <p>${movie.overview}</p>
-      </div>
+    const genres = getMovieGenres(movie);
 
-      <div class="buttons">
-        <button>Add to Favorites</button>
-        <button>Watch Trailer</button>
-      </div>
-    </div>
-  `;
+    // maybe add rating somewhere in here
+    return `
+        <div class="movieDetailsCard">
+        <img src="${baseImgURL}${movie.poster_path}" alt="${movie.title}">
+        
+        <div class="movieDetailsInfo">
+            <h1>${movie.title}</h1>
+            <div class="additionalDetails">
+              <small>${genres}</small>
+              <small> | </small>
+              <small>${movie.release_date}</small>
+              <small> | </small>
+              <small>${movie.runtime} mins</small>
+            </div>
+            <p class="movieDesc">${movie.overview}</p>
+        </div>
+
+        <div class="buttons">
+            <button>Add to Favorites</button>
+            <button>Add to Watchlist</button>
+        </div>
+        </div>
+    `;
 }
 
 export function featuredMovieTemplate(info, baseImgURL) {
