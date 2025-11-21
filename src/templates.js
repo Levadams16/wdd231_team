@@ -5,7 +5,7 @@ export function movieCardTemplate(info, genreMap, baseImgURL) {
 
     return `
     <div class="movieContainer">
-      <a href="movie.html?id=${info.id}" class="movieLink">
+      <a href="./movie.html?id=${info.id}" class="movieLink">
         <img src="${baseImgURL}${info.poster_path}" alt="${info.title} poster">
         <p>${genres}</p>
         <h4>${info.title}</h4>
