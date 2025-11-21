@@ -4,7 +4,11 @@
     border-radius: 10px;
 }
 
-.ratingButton, .watchlistButton, .buttons button {
+/* eventually want to add + to ✓ animation upon adding a
+movie. should check to see if movie ID is in localstorage 
+so it is accurate on future visits */
+
+.watchlistButton, .buttons button {
     padding: 5px 10px;
     border-radius: 5px;
     border: none;
@@ -13,7 +17,7 @@
     transition: background-color 0.3s, padding 0.3s;
 }
 
-.ratingButton:hover, .watchlistButton:hover, .buttons button:hover {
+.watchlistButton:hover, .buttons button:hover {
     background-color: rgb(64, 64, 64);
     padding: 7px 12px;
 }
@@ -57,7 +61,7 @@
 }
 
 .buttons {
-    margin: -10px 10px 20px 10px;
+    margin: 10px 10px 20px 10px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -67,12 +71,38 @@
     padding: 15px;
 }
 
-/* REMEMBER TO COME BACK AND STYLE THIS FOR LARGER SCREENS */
+.plusIcon {
+    font-size: 1.2em;
+}
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
     .movieDetailsCard {
         display: flex;
         flex-direction: row;
+        padding: 20px;
+    }
+
+    .movieDetailsInfo {
+        align-items: center;
+    }
+
+    .movieDetailsCard img {
+        max-width: 35%;
+    }
+
+    .buttons {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 900px) {
+
+    .movieDetailsCard img {
+        max-width: 25%;
+    }
+
+    .movieDesc {
+        padding: 10px 60px 10px 60px;
     }
 }
 
