@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Details</title>
+    <title>Newsletter Signup</title>
     <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/movies.css">
-    <script type="module" src="/src/movie.js"></script>
+    <script type="module" src="/src/newsletter.js"></script>
 </head>
 <body>
     <header class="header">
         <button class="hamburger" id="hamburger">&#9776;</button>
         <a class="logo" href="index.html">Film Finder</a>
         <nav class="nav_buttons" id="navButtons">
-            <a href="newsletter.html">
-                <button>Newsletter</button>
-            </a>
+            <button>Newsletter</button>
             <a href="favorites.html">
                 <button>Favorites</button>
             </a>
@@ -23,7 +20,21 @@
         </nav>
     </header>
 
-    <main id="movieDetails"></main>
+    <main>
+        <!--PLACEHOLDER FORM. NEED TO CHANGE THESE-->
+        <form action="thankyou.html" id="myForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required minlength="3" maxlength="15">
+            <span id="usernameError"></span>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <span id="emailError"></span>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required pattern=".{8,} title=Format: at least 8 characters">
+            <span id="passwordError"></span>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
 
     <footer class="footer">
         <a class="logo" href="index.html">Film Finder</a>
