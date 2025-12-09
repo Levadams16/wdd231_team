@@ -93,14 +93,51 @@ async function getTrendingMovieGenres(trendingMovies, genreMap) {
     return Array.from(trendingMovieGenres);
 }
 
+// function setGenreDropdown(genreMap) {
+//   const dropdown = document.getElementById("genreDropdown");
+//   Object.entries(genreMap).forEach(([id, name]) => {
+//     const option = document.createElement("option");
+//     option.value = id;
+//     option.textContent = name;
+//     dropdown.appendChild(option);
+//   })
+// }
+
 function setGenreDropdown(genreMap) {
-  const dropdown = document.getElementById("genreDropdown");
-  Object.entries(genreMap).forEach(([id, name]) => {
-    const option = document.createElement("option");
-    option.value = id;
-    option.textContent = name;
-    dropdown.appendChild(option);
-  })
+    const dropdown = document.getElementById('genreDropdown');
+    
+    Object.entries(genreMap).forEach(([id, name]) => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = name;
+        dropdown.appendChild(option);
+    });
+
+    // Add event listener for when user selects a genre
+    dropdown.addEventListener('change', (e) => {
+        const selectedGenreId = e.target.value;
+        console.log('Selected genre ID:', selectedGenreId);
+        
+        // Get all movie containers
+        const movieContainers = document.querySelectorAll('.movieContainer');
+        
+        movieContainers.forEach(movieContainer => {
+            // If "All Genres" is selected (empty value), show all movies
+            if (selectedGenreId === "") {
+                movieContainer.style.display = 'block';
+            } else {
+                // Get the genre paragraph text
+                const genreText = movieContainer.querySelector('p').textContent;
+                
+                // Check if the movie's genres include the selected genre
+                if (genreText.includes(genreMap[selectedGenreId])) {
+                    movieContainer.style.display = 'block';
+                } else {
+                    movieContainer.style.display = 'none';
+                }
+            }
+        });
+    });
 }
 
 // start of local storage and button logic
