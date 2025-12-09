@@ -1,24 +1,6 @@
+import { baseImgURL, getJson, getGenres } from "./api.js";
 import { movieCardTemplate, featuredMovieTemplate, featuredGenreTemplate } from "./templates.js"
 import { mapGenreIdsToNames } from "./utility.js";
-
-const baseURL = "https://api.themoviedb.org/3/";
-const apiKey = import.meta.env.VITE_API_KEY;
-console.log("API KEY LOADED:", apiKey);
-
-const baseImgURL = "https://image.tmdb.org/t/p/w500";
-
-
-async function getJson(endpoint) {
-    const separator = endpoint.includes("?") ? "&" : "?";
-    const url = `${baseURL}${endpoint}${separator}api_key=${apiKey}`;
-
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error("Response not ok");
-    }
-
-    return await response.json();
-}
 
 async function fetchDevFavorites() {
     try {
@@ -65,17 +47,6 @@ async function setFeaturedMovie() {
     const featuredContainer = document.querySelector(".featuredMovie");
     let html = featuredMovieTemplate(movie, baseImgURL);
     featuredContainer.insertAdjacentHTML("afterbegin", html);
-}
-
-async function getGenres() {
-    const data = await getJson("genre/movie/list");
-    // returns { genres: [{id: 28, name: Action}, ...]}
-    const genreMap = {};
-    data.genres.forEach(genre => {
-        genreMap[genre.id] = genre.name;
-    });
-
-    return genreMap;
 }
 
 async function getTrendingMovieGenres(trendingMovies, genreMap) {

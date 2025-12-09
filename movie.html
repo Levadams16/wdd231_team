@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Site</title>
-    <!-- <link rel="stylesheet" href="css/base.css"> -->
-    <link rel="stylesheet" href="css/home.css">
-    <script type="module" src="/src/main.js"></script>
+    <title>Movie Details</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/movies.css">
+    <script type="module" src="/src/movie.js"></script>
 </head>
 <body>
     <header class="header">
@@ -22,27 +22,9 @@
             <button class="search">Search</button>
         </nav>
     </header>
-    <main>
-        <div class="featuredMovie"></div>
 
-        <section class="moviesToWatch">
-            <h4>Genres</h4>
-            <div class="genreContainer">
-                 <select id="genreDropdown">
-                    <option value="">All Genres</option>
-                 </select>
-            </div>
-            <h3>Movies to Watch</h3>
-            <p class="trendingMoviesDesc">Check out some of the most popular movies trending this week! Browse through 
-               the list below to discover exciting titles across various genres—from action-
-               packed adventures to thrilling mysteries. Find your next favorite movie!
-            </p>
-            <div class="moviesContainer"></div>
-        </section>
-        <button id="clearStorage">
-            Clear Favorites (Testing)
-        </button>
-    </main>
+    <main id="movieDetails"></main>
+
     <footer class="footer">
         <a class="logo" href="index.html">Film Finder</a>
         <div class="footer_buttons">
