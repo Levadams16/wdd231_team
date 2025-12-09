@@ -50,68 +50,61 @@ async function setFeaturedMovie() {
 }
 
 async function getTrendingMovieGenres(trendingMovies, genreMap) {
-    // sets don't allow for duplicate values
     const trendingMovieGenres = new Set();
 
     trendingMovies.forEach(movie => {
-        // gets a string of all a specific movie's genres
         const genres = mapGenreIdsToNames(movie, genreMap);
 
-        // split into individual genres within an array and adds each to the set
         genres.split(", ").forEach(genre => trendingMovieGenres.add(genre));
     })
 
     return Array.from(trendingMovieGenres);
 }
 
-// function setGenreDropdown(genreMap) {
-//   const dropdown = document.getElementById("genreDropdown");
-//   Object.entries(genreMap).forEach(([id, name]) => {
-//     const option = document.createElement("option");
-//     option.value = id;
-//     option.textContent = name;
-//     dropdown.appendChild(option);
-//   })
-// }
-
 function setGenreDropdown(genreMap) {
-    const dropdown = document.getElementById('genreDropdown');
-    
+    const list = document.querySelector('.dropdownList');
+    const button = document.querySelector('.dropdownBtn');
+
+    const all = document.createElement('li');
+    all.textContent = "All Genres";
+    all.dataset.id = "";
+    list.appendChild(all);
+
     Object.entries(genreMap).forEach(([id, name]) => {
-        const option = document.createElement('option');
-        option.value = id;
-        option.textContent = name;
-        dropdown.appendChild(option);
+        const li = document.createElement('li');
+        li.textContent = name;
+        li.dataset.id = id;
+        list.appendChild(li);
     });
 
-    // Add event listener for when user selects a genre
-    dropdown.addEventListener('change', (e) => {
-        const selectedGenreId = e.target.value;
-        console.log('Selected genre ID:', selectedGenreId);
-        
-        // Get all movie containers
-        const movieContainers = document.querySelectorAll('.movieContainer');
-        
-        movieContainers.forEach(movieContainer => {
-            // If "All Genres" is selected (empty value), show all movies
-            if (selectedGenreId === "") {
-                movieContainer.style.display = 'block';
-            } else {
-                // Get the genre paragraph text
-                const genreText = movieContainer.querySelector('p').textContent;
-                
-                // Check if the movie's genres include the selected genre
-                if (genreText.includes(genreMap[selectedGenreId])) {
-                    movieContainer.style.display = 'block';
+    button.addEventListener('click', () => {
+        list.classList.toggle('open');
+    });
+
+    list.querySelectorAll('li').forEach(li => {
+        li.addEventListener('click', () => {
+            button.textContent = li.textContent + " ▼";
+            list.classList.remove('open');
+
+            const selectedGenreId = li.dataset.id;
+
+            const movieContainers = document.querySelectorAll('.movieContainer');
+
+            movieContainers.forEach(movieContainer => {
+                if (selectedGenreId === "") {
+                    movieContainer.style.display = "block";
                 } else {
-                    movieContainer.style.display = 'none';
+                    const genreText = movieContainer.querySelector('p').textContent;
+                    if (genreText.includes(genreMap[selectedGenreId])) {
+                        movieContainer.style.display = "block";
+                    } else {
+                        movieContainer.style.display = "none";
+                    }
                 }
-            }
+            });
         });
     });
 }
-
-// start of local storage and button logic
 
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
@@ -153,8 +146,6 @@ function attachWatchlistListeners() {
   });
 }
 
-
-// Clear Storage Button
 const clearStorageButton = document.getElementById('clearStorage');
 
 if (clearStorageButton) {

@@ -16,3 +16,56 @@
 .trendingMoviesDesc {
     width: 60%;
 }
+
+.customDropdown {
+  position: relative;
+  display: inline-block;
+  width: 180px;
+  font-size: 1rem;
+}
+
+.dropdownBtn {
+  width: 100%;
+  padding: 10px;
+  background: #222;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dropdownList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #333;
+  color: white;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  border-radius: 6px;
+  overflow: hidden;
+
+  /* Animation */
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.dropdownList.open {
+  max-height: 700px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dropdownList li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #444;
+}
+
+.dropdownList li:hover {
+  background: #555;
+}
