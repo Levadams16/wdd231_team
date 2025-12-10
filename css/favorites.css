@@ -16,5 +16,6 @@ main {
     /* flex-grow (second 0): 0 to prevent the card from stretching to fit container */
     /* flex-basis (third 0): 271px to set size */
     flex: 0 0 271px;
+    height: 720px;
     text-align: center;
 }

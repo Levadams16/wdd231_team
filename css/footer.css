@@ -48,13 +48,13 @@
     .footer {
         flex-direction: row;
         justify-content: space-between;
-        padding: 20px 40px;
+        padding: 20px 40px 20px 15px;
         height: 100px;
     }
 
     .footer_buttons {
         flex-direction: row;
-        gap: 70px;
+        gap: 20px;
         width: auto;
     }
 
@@ -74,5 +74,16 @@
 
     .socials {
         margin-left: auto;
+    }
+}
+
+@media (min-width: 950px) {
+    .footer {
+        padding: 20px 40px;
+        height: 100px;
+    }
+
+    .footer_buttons {
+        gap: 70px;
     }
 }

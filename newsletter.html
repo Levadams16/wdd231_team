@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsletter Signup</title>
+    <title>Film Finder | Newsletter Signup</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/newsletter.css">
     <script type="module" src="/src/newsletter.js"></script>
@@ -13,36 +13,44 @@
         <button class="hamburger" id="hamburger">&#9776;</button>
         <a class="logo" href="index.html">Film Finder</a>
         <nav class="nav_buttons" id="navButtons">
-            <button>Newsletter</button>
+            <a href="newsletter.html">
+                <button>Newsletter</button>
+            </a>
             <a href="favorites.html">
                 <button>Favorites</button>
             </a>
-            <button class="search">Search</button>
         </nav>
     </header>
 
     <main>
-        <form action="thankyou.html" id="myForm">
-            <label for="username">Username*:</label>
-            <input type="text" id="username" name="username" required minlength="3" maxlength="15">
-            <span id="usernameError"></span>
-            <label for="email">Email*:</label>
-            <input type="email" id="email" name="email">
-            <span id="emailError"></span>
-            <label for="password">Password*:</label>
-            <input type="password" id="password" name="password" required pattern=".{8,}" title="Format: at least 8 characters">
-            <span id="passwordError"></span>
-            <button type="submit">Submit</button>
-        </form>
+        <h1>Sign up for our newsletter!</h1>
+        <div class="formContainer">
+            <form action="thankyou.html" id="myForm">
+                <label for="username">Username*:</label>
+                <input type="text" id="username" name="username" required minlength="3" maxlength="15">
+                <span id="usernameError"></span>
+                <label for="email">Email*:</label>
+                <input type="email" id="email" name="email">
+                <span id="emailError"></span>
+                <label for="password">Password*:</label>
+                <input type="password" id="password" name="password" required pattern=".{8,}"
+                    title="Format: at least 8 characters">
+                <span id="passwordError"></span>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </main>
     
     <footer class="footer">
         <a class="logo" href="index.html">Film Finder</a>
         <div class="footer_buttons">
             <button class="back_to_top">Back to Top</button>
-            <button>Newsletter</button>
-            <button>Favorites</button>
-            <button>Search</button>
+            <a href="newsletter.html">
+                <button>Newsletter</button>
+            </a>
+            <a href="favorites.html">
+                <button>Favorites</button>
+            </a>
         </div>
         <div class="socials">
             <img src="images/facebook_logo.png" alt="Facebook Logo">
