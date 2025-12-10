@@ -10,3 +10,13 @@ export function getMovieGenres(movie) {
     // for movie details endpoint
     return movie.genres.map(g => g.name).join(", ");
 }
+
+export function attachBackToTopListener() {
+    const backToTopButton = document.querySelector(".back_to_top");
+    backToTopButton.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+}

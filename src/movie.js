@@ -1,6 +1,7 @@
 import { baseImgURL, getJson } from "./api";
 import { movieDetailsTemplate } from "./templates";
 import { attachUserSelectionListeners, initializeButtonState } from "./localstorage.js";
+import { attachBackToTopListener } from "./utility.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const movieId = urlParams.get("id");
@@ -25,6 +26,7 @@ async function loadMovieDetails() {
 
 async function init() {
     await loadMovieDetails();
+    attachBackToTopListener();
 }
 
 init();

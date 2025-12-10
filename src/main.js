@@ -1,7 +1,10 @@
 import { baseImgURL, getJson, getGenres } from "./api.js";
 import { movieCardTemplate, featuredMovieTemplate, featuredGenreTemplate } from "./templates.js"
-import { mapGenreIdsToNames } from "./utility.js";
+import { mapGenreIdsToNames, attachBackToTopListener } from "./utility.js";
 import { attachUserSelectionListeners, initializeButtonState } from "./localstorage.js";
+
+// array storing all trending movies returned by API call to prevent repeated, unecessary calls 
+let allTrendingMoviesCache = [];
 
 async function fetchDevFavorites() {
     try {
@@ -24,20 +27,37 @@ async function fetchDevFavorites() {
     }
 }
 
-async function setTrendingMovies(genreMap) {
+async function fetchAndCacheTrendingMovies(genreMap) {
     const trendingMovieData = await getJson("trending/movie/week");
-    const allTrendingMovies = trendingMovieData.results;
-    // grab only the first 8
-    const trendingMovies = allTrendingMovies.slice(0, 8);
+
+    // store full list in global cache
+    allTrendingMoviesCache = trendingMovieData.results;
+    
+    // displays initial trending movies (just takes the first 8, not sorted)
+    renderMovies(allTrendingMoviesCache, genreMap);
+}
+
+function renderMovies(movieArray, genreMap) {
+    // grabs only the first 8
+    const moviesToDisplay = movieArray.slice(0, 8);
 
     const moviesContainer = document.querySelector(".moviesContainer");
-    // using the trendingMovies array, convert each object into html strings with the movieCardTemplate function  
-    let html = trendingMovies.map(movie => {
+    // clear container before inserting new movies
+    moviesContainer.innerHTML = "";
+
+    // using the moviesToDisplay array, convert each object into html strings with the movieCardTemplate function  
+    let html = moviesToDisplay.map(movie => {
       const genres = mapGenreIdsToNames(movie, genreMap);
       return movieCardTemplate(movie, genres, baseImgURL);
     });
+
     // join the elements of the html array and insert it into the intro section
     moviesContainer.insertAdjacentHTML("afterbegin", html.join(""));
+
+    // attach button listeners after rendering new HTML
+    const watchlistButtons = document.querySelectorAll(".watchlistButton");
+    initializeButtonState(watchlistButtons, "watchlist"); 
+    attachUserSelectionListeners(watchlistButtons, "watchlist");
 }
 
 async function setFeaturedMovie() {
@@ -90,20 +110,20 @@ function setGenreDropdown(genreMap) {
 
             const selectedGenreId = li.dataset.id;
 
-            const movieContainers = document.querySelectorAll('.movieContainer');
+            let filteredMovies = [];
+            if (selectedGenreId === "") {
+                filteredMovies = allTrendingMoviesCache;
+            } else {
+                const targetId = parseInt(selectedGenreId);
 
-            movieContainers.forEach(movieContainer => {
-                if (selectedGenreId === "") {
-                    movieContainer.style.display = "block";
-                } else {
-                    const genreText = movieContainer.querySelector('p').textContent;
-                    if (genreText.includes(genreMap[selectedGenreId])) {
-                        movieContainer.style.display = "block";
-                    } else {
-                        movieContainer.style.display = "none";
-                    }
-                }
-            });
+                // creates an array of only movies with the selected genre id
+                filteredMovies = allTrendingMoviesCache.filter(movie => {
+                    return movie.genre_ids.includes(targetId);
+                });
+            }
+
+            // display movies corresponding to genre selected
+            renderMovies(filteredMovies, genreMap);
         });
     });
 }
@@ -130,13 +150,14 @@ if (clearStorageButton) {
 
 async function init() {
     const genreMap = await getGenres();
+
+    await fetchAndCacheTrendingMovies(genreMap);
+
     setGenreDropdown(genreMap);
     await setFeaturedMovie();
-    await setTrendingMovies(genreMap);
-    
-    const watchlistButtons = document.querySelectorAll('.watchlistButton');
-    initializeButtonState(watchlistButtons, 'watchlist');
-    attachUserSelectionListeners(watchlistButtons, 'watchlist');
+
+    // attach button event listener
+    attachBackToTopListener();
 }
 
 init();

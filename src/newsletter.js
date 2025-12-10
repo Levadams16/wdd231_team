@@ -1,3 +1,5 @@
+import { attachBackToTopListener } from "./utility";
+
 let usernameEl = document.querySelector("#username");
 let emailEl = document.querySelector("#email");
 let passwordEl = document.querySelector("#password");
@@ -8,9 +10,6 @@ const passwordError = document.getElementById("passwordError");
 const formElement = document.forms[0];
 let isValid = true;
 
-usernameEl.addEventListener("input", usernameVal);
-emailEl.addEventListener("input", emailVal);
-passwordEl.addEventListener("input", passwordVal);
 function usernameVal() {
   // Username Validation
   const value = usernameEl.value;
@@ -59,6 +58,7 @@ formElement.addEventListener("submit", function (e) {
     e.preventDefault();
   }
 });
+
 function sanitizeString(input) {
   console.log(input);
   let sanitized = "";
@@ -88,3 +88,9 @@ function sanitizeString(input) {
   console.log(sanitized);
   return sanitized;
 }
+
+usernameEl.addEventListener("input", usernameVal);
+emailEl.addEventListener("input", emailVal);
+passwordEl.addEventListener("input", passwordVal);
+
+attachBackToTopListener();

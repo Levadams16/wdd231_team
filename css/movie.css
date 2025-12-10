@@ -1,0 +1,23 @@
+@media (min-width: 701px) and (max-width: 840px) {
+    footer {
+        margin-top: 110px;
+    }
+}
+
+@media (min-width: 841px) and (max-width: 899px) {
+    footer {
+        margin-top: 110px;
+    }
+}
+
+@media (min-width: 900px) and (max-width: 1300px) {
+    footer {
+        margin-top: 165px;
+    }
+}
+
+@media (min-width: 980px) and (max-width: 1300px) {
+    footer {
+        margin-top: 165px;
+    }
+}

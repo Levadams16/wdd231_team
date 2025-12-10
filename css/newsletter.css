@@ -1,4 +1,4 @@
-span {
+.formContainer form > span {
   color: red;
   display: block;
   height: 30px;

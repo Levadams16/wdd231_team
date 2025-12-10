@@ -1,6 +1,6 @@
 import { movieCardTemplate } from "./templates";
 import { baseImgURL, getJson } from "./api.js";
-import { getMovieGenres } from "./utility.js";
+import { getMovieGenres, attachBackToTopListener } from "./utility.js";
 
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
@@ -28,6 +28,7 @@ async function displayUserSelections(movieArray, arrayContainer, selection) {
 }
 
 async function init() {
+    attachBackToTopListener();
     displayUserSelections(favorites, favoriteMovieSection, "Favorites");
     displayUserSelections(watchlist, watchlistMovieSection, "Watchlist");
 }
