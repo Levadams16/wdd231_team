@@ -9,7 +9,7 @@ let allTrendingMoviesCache = [];
 async function fetchDevFavorites() {
     try {
         // await fetch call to get the response object
-        const response = await fetch("dev-favs.json");
+        const response = await fetch("/dev-favs.json");
 
         // check if response was successful
         if (!response.ok) {
@@ -68,7 +68,13 @@ async function setFeaturedMovie() {
 
     const featuredContainer = document.querySelector(".featuredMovie");
     let html = featuredMovieTemplate(movie, baseImgURL);
-    featuredContainer.insertAdjacentHTML("afterbegin", html);
+    featuredContainer.innerHTML = html;
+
+    // attach event listeners to the featured movie watchlist button
+    const watchlistButton = featuredContainer.querySelector('.watchlistButton');
+    // placed watchlistButton in an array because initalizeButtonState and attachUserSelectionListeners expect an array data type
+    initializeButtonState([watchlistButton], "watchlist");
+    attachUserSelectionListeners([watchlistButton], "watchlist");
 }
 
 async function getTrendingMovieGenres(trendingMovies, genreMap) {

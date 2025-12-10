@@ -8,7 +8,7 @@ const favoriteMovieSection = document.querySelector('.favoriteMovies');
 const watchlistMovieSection = document.querySelector('.watchlistMovies');
 
 async function displayUserSelections(movieArray, arrayContainer, selection) {
-
+    
     if (movieArray.length == 0) {
         console.log(`No movies in your ${selection}.`);
         return;
