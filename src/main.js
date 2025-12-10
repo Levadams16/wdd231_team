@@ -1,6 +1,7 @@
 import { baseImgURL, getJson, getGenres } from "./api.js";
 import { movieCardTemplate, featuredMovieTemplate, featuredGenreTemplate } from "./templates.js"
 import { mapGenreIdsToNames } from "./utility.js";
+import { attachUserSelectionListeners, initializeButtonState } from "./localstorage.js";
 
 async function fetchDevFavorites() {
     try {
@@ -29,11 +30,12 @@ async function setTrendingMovies(genreMap) {
     // grab only the first 8
     const trendingMovies = allTrendingMovies.slice(0, 8);
 
-    const genres = await getTrendingMovieGenres(trendingMovies, genreMap);
-
     const moviesContainer = document.querySelector(".moviesContainer");
     // using the trendingMovies array, convert each object into html strings with the movieCardTemplate function  
-    let html = trendingMovies.map(movie => movieCardTemplate(movie, genreMap, baseImgURL));
+    let html = trendingMovies.map(movie => {
+      const genres = mapGenreIdsToNames(movie, genreMap);
+      return movieCardTemplate(movie, genres, baseImgURL);
+    });
     // join the elements of the html array and insert it into the intro section
     moviesContainer.insertAdjacentHTML("afterbegin", html.join(""));
 }
@@ -111,57 +113,14 @@ function setGenreDropdown(genreMap) {
     });
 }
 
-// start of local storage and button logic
-
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-function attachWatchlistListeners() {
-  const watchlistButtons = document.querySelectorAll('.watchlistButton');
-
-  watchlistButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      let movieContainer = button.closest('.movieContainer');
-      let movieTitle, movieImg;
-      console.log("Button clicked:", button);
-
-      if (movieContainer) {
-        movieTitle = movieContainer.querySelector('h4').textContent;
-        movieImg = movieContainer.querySelector('img').src;
-      } else {
-        const featuredMovie = button.closest('.featuredMovie');
-        if (featuredMovie) {
-          movieTitle = featuredMovie.querySelector('h2').textContent;
-          movieImg = featuredMovie.querySelector('img').src;
-        }
-      }
-
-      if (movieTitle && movieImg) {
-        const movie = { title: movieTitle, img: movieImg };
-        const alreadyAdded = favorites.some(fav => fav.title === movie.title);
-
-        if (!alreadyAdded) {
-          favorites.push(movie);
-          localStorage.setItem('favorites', JSON.stringify(favorites));
-          alert(`${movie.title} added to favorites!`);
-          button.textContent = "Added to Watchlist";
-          button.disabled = true;
-        } else {
-          alert(`${movie.title} is already in your favorites.`);
-        }
-      }
-    });
-  });
-}
-
-
 // Clear Storage Button
 const clearStorageButton = document.getElementById('clearStorage');
 
 if (clearStorageButton) {
   clearStorageButton.addEventListener('click', () => {
-    if (confirm('Are you sure you want to clear all favorites?')) {
-      localStorage.removeItem('favorites');
-      favorites = [];
+    if (confirm('Are you sure you want to clear your watchlist?')) {
+      localStorage.removeItem('watchlist');
+      watchlist = [];
       
       const watchlistButtons = document.querySelectorAll('.watchlistButton');
       watchlistButtons.forEach(button => {
@@ -169,7 +128,7 @@ if (clearStorageButton) {
         button.disabled = false;
       });
       
-      alert('Favorites cleared!');
+      alert('Watchlist cleared!');
     }
   });
 }
@@ -179,7 +138,10 @@ async function init() {
     setGenreDropdown(genreMap);
     await setFeaturedMovie();
     await setTrendingMovies(genreMap);
-    attachWatchlistListeners();
+    
+    const watchlistButtons = document.querySelectorAll('.watchlistButton');
+    initializeButtonState(watchlistButtons, 'watchlist');
+    attachUserSelectionListeners(watchlistButtons, 'watchlist');
 }
 
 init();

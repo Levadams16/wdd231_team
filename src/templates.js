@@ -1,8 +1,6 @@
 import { getMovieGenres, mapGenreIdsToNames } from "./utility.js";
 
-export function movieCardTemplate(info, genreMap, baseImgURL) {
-    const genres = mapGenreIdsToNames(info, genreMap);
-
+export function movieCardTemplate(info, genres, baseImgURL, showButtons = true) {
     return `
     <div class="movieContainer">
       <a href="./movie.html?id=${info.id}" class="movieLink">
@@ -11,13 +9,15 @@ export function movieCardTemplate(info, genreMap, baseImgURL) {
         <h4>${info.title}</h4>
         <p>${info.overview}</p>
       </a>
+      ${showButtons ? `
       <div class="movieOptionsContainer">
         <button class="watchlistButton"><span class="plusIcon">+</span> Add to Watchlist</button>
-      </div>
+      </div>` : ''}
     </div>
     `;
 }
 
+// buttons contain custom data attributes so event listeners will work correctly
 export function movieDetailsTemplate(movie, baseImgURL) {
     const genres = getMovieGenres(movie);
 
@@ -38,8 +38,18 @@ export function movieDetailsTemplate(movie, baseImgURL) {
             <p class="movieDesc">${movie.overview}</p>
             
             <div class="buttons">
-              <button><span class="plusIcon">+</span> Add to Favorites</button>
-              <button><span class="plusIcon">+</span> Add to Watchlist</button>
+              <button class="favoritesButton"
+                data-id="${movie.id}"
+                data-title="${movie.title}"
+                data-img="${baseImgURL + movie.poster_path}">
+                <span class="plusIcon">+</span> Add to Favorites
+              </button>
+              <button class="watchlistButton"
+                data-id="${movie.id}"
+                data-title="${movie.title}"
+                data-img="${baseImgURL + movie.poster_path}">
+                <span class="plusIcon">+</span> Add to Watchlist
+              </button>
             </div>
         </div>
 
@@ -48,17 +58,25 @@ export function movieDetailsTemplate(movie, baseImgURL) {
 }
 
 export function featuredMovieTemplate(info, baseImgURL) {
-    // change template to include "reason" (from JSON file) instead of overview (from database)
     return `
-    <div class="featuredMovieDesc">
+    <div class="featuredMovieDesc" data-id="${info.id}">
+      <a href="./movie.html?id=${info.id}" class="movieLink">
         <h2>${info.title}</h2>
         <p>${info.overview}</p>
+      </a>
         <div class="movieOptionsContainer">
-            <button class="watchlistButton">Add to Watchlist</button>
+            <button class="watchlistButton"
+              data-id="${info.id}"
+              data-title="${info.title}"
+              data-img="${baseImgURL + info.poster_path}">
+              <span class="plusIcon">+</span> Add to Watchlist
+            </button>
         </div>
     </div>
     <div class="featuredMovieImgContainer">
+      <a href="./movie.html?id=${info.id}" class="movieLink">
         <img src="${baseImgURL}${info.poster_path}" alt="${info.title} poster">
+      </a>
     </div>`;
 }
 

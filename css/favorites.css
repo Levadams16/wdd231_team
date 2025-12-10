@@ -1,7 +1,20 @@
 main {
-    margin-left: 100px;
+    margin-left: 50px;
 }
 
-h1 {
-    font-size: 50px;
+.favoriteMovies, .watchlistMovies {
+    display: flex;
+    /* enables horizontal scrolling when content overflows*/
+    overflow-x: auto;
+    /* disables vertical scrolling */
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+.movieContainer {
+    /* flex-shrink (first 0): 0 to prevent the card from shrinking to fit container */
+    /* flex-grow (second 0): 0 to prevent the card from stretching to fit container */
+    /* flex-basis (third 0): 271px to set size */
+    flex: 0 0 271px;
+    text-align: center;
 }
