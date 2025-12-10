@@ -28,9 +28,10 @@
         <section class="moviesToWatch">
             <h4>Genres</h4>
             <div class="genreContainer">
-                 <select id="genreDropdown">
-                    <option value="">All Genres</option>
-                 </select>
+                 <div class="customDropdown">
+                    <button class="dropdownBtn">All Genres</button>
+                    <ul class="dropdownList"></ul>
+                 </div>
             </div>
             <h3>Movies to Watch</h3>
             <p class="trendingMoviesDesc">Check out some of the most popular movies trending this week! Browse through 
@@ -47,9 +48,13 @@
         <a class="logo" href="index.html">Film Finder</a>
         <div class="footer_buttons">
             <button class="back_to_top">Back to Top</button>
-            <button>Newsletter</button>
-            <button>Favorites</button>
-            <button>Search</button>
+            <a href="newsletter.html">
+                <button>Newsletter</button>
+            </a>
+            <a href="favorites.html">
+                <button>Favorites</button>
+            </a>
+            <button class="search">Search</button>
         </div>
         <div class="socials">
             <img src="images/facebook_logo.png" alt="Facebook Logo">
